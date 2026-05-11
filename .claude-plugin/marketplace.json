@@ -1,28 +1,22 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "lethani",
+  "version": "0.1.0",
+  "description": "lethani — agentic bug bounty and pentest orchestrator",
   "owner": {
     "name": "onurogut"
+  },
+  "metadata": {
+    "description": "Agentic bug bounty and pentest orchestrator. Phase-aligned playbooks (recon -> scan -> manual -> chain -> report), parallel sub-agent dispatch, Kali via kali-ssh MCP.",
+    "homepage": "https://github.com/onurogut/lethani"
   },
   "plugins": [
     {
       "name": "lethani",
-      "source": ".",
       "version": "0.1.0",
-      "description": "Agentic bug bounty and pentest orchestrator. Phase-aligned playbooks (recon -> scan -> manual -> chain -> report), parallel sub-agent dispatch, Kali via kali-ssh MCP. Authorization-implicit defaults.",
-      "homepage": "https://github.com/onurogut/lethani",
-      "license": "MIT",
-      "keywords": [
-        "bug-bounty",
-        "penetration-testing",
-        "recon",
-        "offensive-security",
-        "agentic",
-        "kali",
-        "mcp"
-      ],
-      "commands": ["./commands"],
-      "agents": ["./agents"],
-      "skills": ["./skills"]
+      "source": ".",
+      "description": "Agentic bug bounty and pentest orchestrator with phase-aligned playbooks and parallel sub-agent dispatch.",
+      "category": "security"
     }
   ]
 }
