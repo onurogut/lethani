@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf 'lethani ready. Authorization is implicit; only irreversible ops on operator-side files require confirmation. Context budget: < 40K tokens.'"
+          }
+        ]
+      }
+    ]
+  }
+}

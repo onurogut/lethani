@@ -1,0 +1,24 @@
+# markdownlint-cli2 config
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+default: true
+
+# We embed code-style ASCII (logos, tables drawn with box-drawing chars) and
+# wide command examples — disable line-length to allow these.
+MD013: false
+
+# Repeated headings exist by design (e.g. "## Procedure" in every playbook).
+MD024:
+  siblings_only: true
+
+# Inline HTML is fine — README uses <div align="center"> for the banner.
+MD033: false
+
+# Bare URLs in references blocks are intentional.
+MD034: false
+
+# First line not required to be a top-level heading (frontmatter exists).
+MD041: false
+
+# Emphasis used as a heading occasionally inside playbook sections.
+MD036: false

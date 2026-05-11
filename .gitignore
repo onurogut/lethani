@@ -1,0 +1,38 @@
+# lethani
+
+# Engagement artifacts — local, target-specific, never committed
+engagements/
+
+# Archive — historical CLAUDE.md and learnings; stay local
+00_infra/_archive/
+
+# Asciinema casts — keep the rendered GIF, drop the raw cast (often contains
+# local paths/prompts that you may want to re-record cleanly later).
+examples/*.cast
+
+# Local Claude Code state (allow committed settings.json, ignore local overrides)
+.claude/settings.local.json
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Backups
+*.bak
+*.bak.*
+*.tar.gz
+
+# Build / dependency dirs (in case anyone adds a node toolchain locally)
+node_modules/
+.lycheecache
+
+# Python venvs (in case helpers spawn one)
+.venv/
+__pycache__/
+*.pyc
+
+# Plugin development scratch
+*.tmp
+*.tmp.md

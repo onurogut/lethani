@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+# lethani — host-side CLI helper for the lethani workspace.
+#
+# Subcommands:
+#   lethani new <target>        Scaffold engagements/<slug>/ with scope.md template
+#   lethani status [<target>]   Print phase status across engagements (or one target)
+#   lethani backup              Tar.gz the workspace next to ~/lethani.bak.<ts>.tar.gz
+#   lethani version             Print plugin.json version
+#
+# This is a thin shell wrapper. Inside Claude Code, prefer the slash commands
+# (/new-target, /status, ...). This CLI is for when you want to scaffold an
+# engagement without launching Claude.
+set -euo pipefail
+
+# locate workspace root: parent of the bin/ dir holding this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+TODAY="$(date +%Y-%m-%d)"
+
+say() { printf '%s\n' "$*"; }
+die() { printf 'lethani: %s\n' "$*" >&2; exit 1; }
+
+usage() {
+  sed -n '2,12p' "$0"
+  exit "${1:-0}"
+}
+
+slugify() {
+  printf '%s' "$1" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed -E 's/\.[a-z]{2,6}$//' \
+    | tr ' .' '--' \
+    | tr -cd 'a-z0-9-' \
+    | sed -E 's/-+/-/g;s/^-//;s/-$//'
+}
+
+cmd_new() {
+  local target="${1:-}"
+  [[ -z "$target" ]] && die "missing target — usage: lethani new <target>"
+  local slug
+  slug="$(slugify "$target")"
+  [[ -z "$slug" ]] && die "could not derive a slug from '$target'"
+  local dir="$ROOT/engagements/$slug"
+
+  [[ -d "$dir" ]] && die "engagement already exists: $dir"
+
+  mkdir -p "$dir/recon" "$dir/scans" "$dir/poc"
+  : > "$dir/findings.md"
+  : > "$dir/notes.md"
+
+  # apex / wildcard derivation: keep TLD-bearing inputs intact for in_scope
+  local apex="$target"
+  local wildcard=""
+  if [[ "$target" == *.* ]]; then
+    wildcard="\"*.$target\""
+  fi
+
+  cat > "$dir/scope.md" <<EOF
+# Scope — $target
+
+target          : $target
+created         : $TODAY
+in_scope        :
+  - $apex
+$( [[ -n "$wildcard" ]] && printf '  - %s\n' "$wildcard" )
+out_of_scope    : []
+program         : (bug bounty platform / contract / internal — fill if known)
+
+aggressive_rate : false
+brute_force     : false
+oob_endpoint    :
+
+notes           : |
+  (assumptions, special instructions, excluded vuln types, mandatory headers)
+EOF
+
+  say "engagement scaffolded: $dir"
+  say "edit $dir/scope.md if needed, then in Claude Code: /recon $slug"
+}
+
+cmd_status() {
+  local one="${1:-}"
+  local dir
+  if [[ -n "$one" ]]; then
+    dir="$ROOT/engagements/$(slugify "$one")"
+    [[ -d "$dir" ]] || die "no engagement at $dir"
+    _status_row "$dir"
+    return
+  fi
+  for dir in "$ROOT/engagements"/*/; do
+    [[ -d "$dir" ]] || continue
+    _status_row "$dir"
+  done
+}
+
+_status_row() {
+  local dir="$1"
+  local slug
+  slug="$(basename "$dir")"
+  local phase=0
+  [[ -f "$dir/scope.md" ]] && phase=0
+  [[ -f "$dir/recon/_summary.md" ]] && phase=1
+  [[ -f "$dir/scans/_summary.md" ]] && phase=2
+  [[ -s "$dir/findings.md" ]] && phase=3
+  grep -q '^\[chain' "$dir/findings.md" 2>/dev/null && phase=4
+  [[ -f "$dir/report.md" ]] && phase=5
+
+  local n_crit n_high n_med n_low
+  n_crit=$(grep -c 'CRITICAL' "$dir/findings.md" 2>/dev/null || echo 0)
+  n_high=$(grep -c '\bHIGH\b' "$dir/findings.md" 2>/dev/null || echo 0)
+  n_med=$(grep -c 'MEDIUM' "$dir/findings.md" 2>/dev/null || echo 0)
+  n_low=$(grep -c '\bLOW\b' "$dir/findings.md" 2>/dev/null || echo 0)
+
+  printf '%-30s phase:%d  findings: %dC %dH %dM %dL\n' \
+    "$slug" "$phase" "$n_crit" "$n_high" "$n_med" "$n_low"
+}
+
+cmd_backup() {
+  local ts
+  ts="$(date +%Y%m%d_%H%M%S)"
+  local out="$HOME/lethani.bak.${ts}.tar.gz"
+  ( cd "$(dirname "$ROOT")" && tar -czf "$out" "$(basename "$ROOT")" )
+  say "backup: $out"
+}
+
+cmd_version() {
+  if [[ -f "$ROOT/.claude-plugin/plugin.json" ]]; then
+    sed -nE 's/.*"version"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/p' \
+      "$ROOT/.claude-plugin/plugin.json" | head -1
+  else
+    echo "0.0.0-no-manifest"
+  fi
+}
+
+case "${1:-help}" in
+  new)     shift; cmd_new "$@" ;;
+  status)  shift; cmd_status "$@" ;;
+  backup)  cmd_backup ;;
+  version) cmd_version ;;
+  help|-h|--help) usage ;;
+  *) usage 1 ;;
+esac
