@@ -112,16 +112,18 @@ the 3 skills in any Claude Code session.
 
 ```bash
 git clone https://github.com/onurogut/lethani.git ~/lethani
-cd ~/lethani
+cd ~/lethani/plugin
 claude
 ```
 
 Use this when you want the engagement directory, behavior rules
-(`00_infra/behavior_rules.md`), and the CLAUDE.md router all loaded in the
-session context, not just the plugin commands.
+(`plugin/00_infra/behavior_rules.md`), and the CLAUDE.md router all loaded
+in the session context, not just the plugin commands. Engagements live
+one level up at `~/lethani/engagements/`.
 
-Both modes coexist — installing the plugin and `cd ~/lethani` in the same
-session gives you the slash commands plus the workspace-level routing.
+Both modes coexist — installing the plugin and `cd ~/lethani/plugin` in
+the same session gives you the slash commands plus the workspace-level
+routing.
 
 ---
 
@@ -129,10 +131,10 @@ session gives you the slash commands plus the workspace-level routing.
 
 ```bash
 # host-side: SSH key, ~/.ssh/config block, MCP sample config
-./00_infra/scripts/setup-host.sh
+./plugin/00_infra/scripts/setup-host.sh
 
 # kali-side: install the tool inventory the playbooks expect
-scp 00_infra/scripts/setup-kali.sh talon-kali:/tmp/
+scp plugin/00_infra/scripts/setup-kali.sh talon-kali:/tmp/
 ssh talon-kali "bash /tmp/setup-kali.sh"
 ```
 

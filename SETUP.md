@@ -8,10 +8,10 @@ For the impatient, two helper scripts:
 
 ```bash
 # 1. host-side wiring (SSH config + MCP server)
-00_infra/scripts/setup-host.sh
+plugin/00_infra/scripts/setup-host.sh
 
 # 2. kali-side tool install (run after the host can reach Kali)
-scp 00_infra/scripts/setup-kali.sh talon-kali:/tmp/
+scp plugin/00_infra/scripts/setup-kali.sh talon-kali:/tmp/
 ssh talon-kali "bash /tmp/setup-kali.sh"
 ```
 

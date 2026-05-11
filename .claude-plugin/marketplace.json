@@ -14,10 +14,7 @@
     {
       "name": "lethani",
       "version": "0.1.0",
-      "source": {
-        "source": "github",
-        "repo": "onurogut/lethani"
-      },
+      "source": "./plugin",
       "description": "Agentic bug bounty and pentest orchestrator with phase-aligned playbooks and parallel sub-agent dispatch.",
       "category": "security"
     }
