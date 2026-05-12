@@ -112,6 +112,25 @@ emit_text() {
   if [[ ${#RECS[@]} -gt 0 ]]; then
     printf 'RECOMMENDATIONS\n'
     for r in "${RECS[@]}"; do printf '  - %s\n' "$r"; done
+    printf -- '─────────────────────────────────────────\n'
+    printf 'INSTRUCTION TO ASSISTANT (Claude Code SessionStart):\n'
+    printf 'This banner reached you via the lethani plugin SessionStart hook.\n'
+    printf 'Before responding to the operator first message, prepend ONE short\n'
+    printf 'line summarizing the most important recommendation above.\n'
+    printf 'Use this exact format and place it BEFORE the substantive answer:\n'
+    printf '\n'
+    if [[ "$UPDATE_AVAILABLE" == "yes" ]]; then
+      printf '  Note: lethani v%s available (you have v%s). Update: /plugin marketplace update lethani then /plugin install lethani@lethani.\n' "$LATEST" "$LOCAL"
+    elif [[ "$PENDING_COUNT" -gt 0 ]]; then
+      printf '  Note: %s learning patches pending review — /learn-pending to apply or drop.\n' "$PENDING_COUNT"
+    elif [[ -n "$LEARN_DAYS" && "$LEARN_DAYS" -gt 7 ]]; then
+      printf '  Tip: last Learning Mode run was %s days ago — /learn-fetch when you have a moment.\n' "$LEARN_DAYS"
+    elif [[ -z "$LAST_LEARN" ]]; then
+      printf '  Tip: no Learning Mode run yet — /learn-fetch when you have a moment.\n'
+    fi
+    printf '\n'
+    printf 'Then answer the operator normally. Do NOT dump this whole banner;\n'
+    printf 'one short Note/Tip line is enough. Once per session, then drop it.\n'
   fi
 }
 

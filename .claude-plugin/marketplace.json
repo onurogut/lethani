@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "lethani",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "lethani — agentic bug bounty and pentest orchestrator",
   "owner": {
     "name": "onurogut"
@@ -13,7 +13,7 @@
   "plugins": [
     {
       "name": "lethani",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "source": "./plugin",
       "description": "Agentic bug bounty and pentest orchestrator with phase-aligned playbooks and parallel sub-agent dispatch.",
       "category": "security"
