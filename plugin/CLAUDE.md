@@ -42,6 +42,34 @@ Full tool inventory, wordlist paths, command templates, troubleshooting:
 
 ---
 
+## Session Onboarding
+
+The SessionStart hook (`plugin/hooks/hooks.json`) silently delivers a
+`LETHANI HEALTH` banner into the conversation context whenever there is
+something to act on. The operator does NOT see it directly. Before
+answering the operator's first message in a fresh session, scan your
+context for that banner and decide:
+
+- **`UPDATE AVAILABLE`** in the banner → start your reply with one short
+  line, then proceed with the actual answer:
+  > `Note: lethani v<latest> is available (you have v<local>). Run /plugin marketplace update lethani then /plugin install lethani@lethani.`
+- **`pending patches : N`** where N > 0 → start your reply with:
+  > `Note: N learning patches pending review — /learn-pending to apply or drop.`
+- **`last learning : never`** as the only action item → mention once, gently:
+  > `Tip: no Learning Mode run yet — /learn-fetch when you have a moment.`
+- **Banner absent or no action items** → stay silent, just answer.
+
+Format rules for the Notice line:
+- Prefix with `Note:` or `Tip:` (no emojis).
+- One line, no full banner dump.
+- Comes BEFORE the substantive response.
+- Never repeat it within the same session — once per session, then drop.
+
+If the operator asks `/lethani-check` directly, print the full banner
+regardless.
+
+---
+
 ## Behavior Rules (Critical)
 
 Detailed: `00_infra/behavior_rules.md`. Summary:
