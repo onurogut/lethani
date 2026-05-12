@@ -249,5 +249,5 @@ Final conversation recap:
 - Not a guarantee these wall-clock numbers reproduce. Phase 1 wall time
   depends on subdomain count and Kali tooling responsiveness.
 
-For the real safety model see [`00_infra/behavior_rules.md`](../00_infra/behavior_rules.md)
+For the real safety model see [`plugin/00_infra/behavior_rules.md`](../plugin/00_infra/behavior_rules.md)
 and the project [SETUP.md](../SETUP.md).

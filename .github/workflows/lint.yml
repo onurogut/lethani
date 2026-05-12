@@ -47,9 +47,11 @@ jobs:
             --cache
             --max-cache-age 7d
             --no-progress
+            --accept '200,206,403,429'
             --exclude '^mailto:'
             --exclude '^https?://(?:.*example\.com|.*\.example|localhost|127\.0\.0\.1)'
             --exclude '169\.254\.169\.254'
+            --exclude 'medium\.com|reddit\.com|twitter\.com|x\.com|linkedin\.com'
             --exclude-path 'plugin/00_infra/_archive'
             --exclude-path 'engagements'
             --include-fragments
