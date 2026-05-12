@@ -25,7 +25,7 @@ jobs:
         run: npm install -g markdownlint-cli2
 
       - name: Lint
-        run: markdownlint-cli2 "**/*.md" "#engagements" "#00_infra/_archive" "#node_modules"
+        run: markdownlint-cli2 "**/*.md" "#engagements" "#plugin/00_infra/_archive" "#00_infra/_archive" "#node_modules"
 
   linkcheck:
     name: linkcheck (lychee)
@@ -48,8 +48,11 @@ jobs:
             --max-cache-age 7d
             --no-progress
             --exclude-mail
-            --exclude '^https?://(?:USER|<USER>|.*example\.com|.*\.example|localhost|127\.0\.0\.1)'
+            --exclude '^https?://(?:.*example\.com|.*\.example|localhost|127\.0\.0\.1)'
             --exclude '169\.254\.169\.254'
+            --exclude 'YOUR_EMAIL|your_email'
+            --exclude-path 'plugin/00_infra/_archive'
+            --exclude-path 'engagements'
             --include-fragments
             './**/*.md'
           fail: true
@@ -67,6 +70,7 @@ jobs:
           find . -type f \
             \( -name '*.sh' -o -path './bin/lethani' \) \
             -not -path './engagements/*' \
+            -not -path './plugin/00_infra/_archive/*' \
             -not -path './00_infra/_archive/*' \
             -print0 \
             | xargs -0 shellcheck -s bash -S warning

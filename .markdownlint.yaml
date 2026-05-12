@@ -17,8 +17,37 @@ MD033: false
 # Bare URLs in references blocks are intentional.
 MD034: false
 
+# Emphasis used as a heading occasionally inside playbook sections.
+MD036: false
+
+# Playbooks use unfenced code blocks (text-only output samples, ASCII art).
+# Requiring a language tag on every fence is pedantic and adds noise.
+MD040: false
+
 # First line not required to be a top-level heading (frontmatter exists).
 MD041: false
 
-# Emphasis used as a heading occasionally inside playbook sections.
-MD036: false
+# Loose ordered-list numbering is fine in playbook procedures (`1. … 1. …`).
+MD029: false
+
+# Tables in playbooks have wide and narrow columns — pedantic alignment
+# is not worth enforcing.
+MD058: false
+MD060: false
+
+# Heading levels skip in some places by design (frontmatter + H1 + H3).
+MD001: false
+
+# Trailing punctuation in headings (`Phase 1.` etc.) is intentional.
+MD026: false
+
+# Lists without surrounding blank lines exist in dense playbooks.
+MD032: false
+MD031: false
+MD022: false
+
+# Multiple top-level headings tolerated (subagent/skill frontmatter quirks).
+MD025: false
+
+# Unsafe inline HTML / Liquid in playbook examples.
+MD038: false
