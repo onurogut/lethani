@@ -76,11 +76,12 @@ if [[ -f "$PENDING" ]]; then
   PENDING_COUNT=$(grep -c '^STATUS *: *pending' "$PENDING" 2>/dev/null || echo 0)
 fi
 
-# decide whether to surface in quiet mode
+# decide whether to surface in quiet mode (SessionStart auto-display)
+# Intentionally tight: only true urgencies — operator gets a Note line.
+# Soft suggestions (never learned, stale >7d) stay quiet on session start
+# and live only inside /lethani-check on demand.
 NEEDS_ACTION="no"
 if [[ "$UPDATE_AVAILABLE" == "yes" ]]; then NEEDS_ACTION="yes"; fi
-if [[ -n "$LEARN_DAYS" && "$LEARN_DAYS" -gt 7 ]]; then NEEDS_ACTION="yes"; fi
-if [[ -z "$LAST_LEARN" ]]; then NEEDS_ACTION="yes"; fi
 if [[ "$PENDING_COUNT" -gt 0 ]]; then NEEDS_ACTION="yes"; fi
 
 emit_text() {
@@ -112,26 +113,25 @@ emit_text() {
   if [[ ${#RECS[@]} -gt 0 ]]; then
     printf 'RECOMMENDATIONS\n'
     for r in "${RECS[@]}"; do printf '  - %s\n' "$r"; done
-    printf -- '─────────────────────────────────────────\n'
-    printf 'INSTRUCTION TO ASSISTANT (Claude Code SessionStart):\n'
-    printf 'This banner reached you via the lethani plugin SessionStart hook.\n'
-    printf 'Before responding to the operator first message, prepend ONE short\n'
-    printf 'line summarizing the most important recommendation above.\n'
-    printf 'Use this exact format and place it BEFORE the substantive answer:\n'
-    printf '\n'
-    if [[ "$UPDATE_AVAILABLE" == "yes" ]]; then
-      printf '  Note: lethani v%s available (you have v%s). Update: /plugin marketplace update lethani then /plugin install lethani@lethani.\n' "$LATEST" "$LOCAL"
-    elif [[ "$PENDING_COUNT" -gt 0 ]]; then
-      printf '  Note: %s learning patches pending review — /learn-pending to apply or drop.\n' "$PENDING_COUNT"
-    elif [[ -n "$LEARN_DAYS" && "$LEARN_DAYS" -gt 7 ]]; then
-      printf '  Tip: last Learning Mode run was %s days ago — /learn-fetch when you have a moment.\n' "$LEARN_DAYS"
-    elif [[ -z "$LAST_LEARN" ]]; then
-      printf '  Tip: no Learning Mode run yet — /learn-fetch when you have a moment.\n'
-    fi
-    printf '\n'
-    printf 'Then answer the operator normally. Do NOT dump this whole banner;\n'
-    printf 'one short Note/Tip line is enough. Once per session, then drop it.\n'
   fi
+}
+
+# Instruction block emitted ONLY by the SessionStart hook (--quiet path),
+# never by manual /lethani-check. Tells the assistant what to surface.
+emit_instruction() {
+  printf -- '─────────────────────────────────────────\n'
+  printf 'INSTRUCTION TO ASSISTANT (Claude Code SessionStart):\n'
+  printf 'This banner reached you via the lethani plugin SessionStart hook.\n'
+  printf 'Before responding to the operator first message, prepend ONE short\n'
+  printf 'line summarizing the urgent item above. Use this exact format and\n'
+  printf 'place it BEFORE the substantive answer:\n\n'
+  if [[ "$UPDATE_AVAILABLE" == "yes" ]]; then
+    printf '  Note: lethani v%s available (you have v%s). Update: /plugin marketplace update lethani then /plugin install lethani@lethani.\n' "$LATEST" "$LOCAL"
+  elif [[ "$PENDING_COUNT" -gt 0 ]]; then
+    printf '  Note: %s learning patches pending review — /learn-pending to apply or drop.\n' "$PENDING_COUNT"
+  fi
+  printf '\nThen answer the operator normally. Do NOT dump this whole banner;\n'
+  printf 'one short Note line is enough. Once per session, then drop it.\n'
 }
 
 emit_json() {
@@ -145,6 +145,7 @@ case "$MODE" in
   quiet)
     if [[ "$NEEDS_ACTION" == "yes" ]]; then
       emit_text
+      emit_instruction
     fi
     ;;
 esac
