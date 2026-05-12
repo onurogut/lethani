@@ -20,7 +20,7 @@ on a target; mine weekly for general technique drift.
 | HackerOne Hacktivity | https://hackerone.com/hacktivity | New disclosed reports, filter by bounty range (>$1k), bug type, program | Daily |
 | reddelexc/hackerone-reports | https://github.com/reddelexc/hackerone-reports | Auto-mirrored top H1 reports sorted by program / bug type / bounty | Weekly (cron-updated) |
 | Bugcrowd CrowdStream | https://bugcrowd.com/crowdstream | Disclosed Bugcrowd submissions, full PoC for accepted bugs | Weekly |
-| Intigriti Hall of Fame | https://www.intigriti.com/researchers/hall-of-fame | Top researchers + linked writeups on Intigriti programs | Monthly |
+| Intigriti researchers portal | https://www.intigriti.com/researchers | Top researchers, hall of fame, leaderboards, monthly bounties | Monthly |
 | YesWeHack Dojo / blog | https://blog.yeswehack.com/ | EU-program disclosures, niche techniques | Weekly |
 
 ---
@@ -71,7 +71,7 @@ appears here it has already passed one quality filter.
 |---|---|---|---|
 | tl;dr sec (Clint Gibler) | https://tldrsec.com/ | Weekly curated infosec, strong on appsec/cloud/devsecops with technique highlights | Weekly (Tue) |
 | Pentester Land Weekly (archive) | https://pentester.land/list-of-bug-bounty-writeups.html | Historical writeup index; current site lags, prefer the GitHub list | Stale — use as archive |
-| pdelteil/BugBountyHunterMethodology / weekly mirrors | https://github.com/pdelteil/BugBountyHunting-Books-and-Notes | Community-aggregated writeup links; lower noise than Reddit | Weekly |
+| KathanP19/HowToHunt | https://github.com/KathanP19/HowToHunt | Community-aggregated bug bounty methodology + writeup links | Weekly |
 | Bug Bytes (Intigriti) | https://newsletter.intigriti.com/ | Community-picked writeups, new tooling, Intigriti-program intel | Weekly |
 | hackingthe.cloud | https://hackingthe.cloud/ | Cloud-native offensive tactics (AWS heavy, some Azure/GCP) | Bi-weekly content + annual wrap-up |
 | OffSec Blog | https://www.offsec.com/blog/ | OSCP-adjacent writeups, less bug-bounty focused but solid AD/Linux | Bi-weekly |
@@ -91,9 +91,9 @@ marketing blog.
 | nuclei (engine releases) | https://github.com/projectdiscovery/nuclei/releases | New matchers, protocols, DAST features | Monthly |
 | ProjectDiscovery Blog | https://blog.projectdiscovery.io/ | Methodology posts, feature announcements impacting recon flow | Monthly |
 | reconftw releases | https://github.com/six2dez/reconftw/releases | Recon flow updates, new module integrations | Monthly |
-| daffainfo/PayloadsAllTheThings + nuclei collection | https://github.com/daffainfo/nuclei-template | Community templates not yet upstream | Weekly |
+| projectdiscovery/nuclei-templates (community PRs) | https://github.com/projectdiscovery/nuclei-templates/pulls | Open PRs for templates not yet upstream | Weekly |
 | Burp Suite release notes | https://portswigger.net/burp/releases | New scanner checks, BCheck additions | Monthly |
-| Caido changelog | https://docs.caido.io/release-notes/ | Workflow features, new plugins | Bi-weekly |
+| Caido changelog | https://github.com/caido/caido/releases | Workflow features, new plugins | Bi-weekly |
 | ffuf releases | https://github.com/ffuf/ffuf/releases | New encoders, filters, output formats | Quarterly |
 
 ---
@@ -111,7 +111,7 @@ one of these timelines within 48h.
 | Sam Sanoob (xelkomy) | https://x.com/xelkomy | Cache poisoning, edge-side includes, esoteric web |
 | Frans Rosén | https://labs.detectify.com/author/frans/ + https://x.com/fransrosen | Cloud takeovers, OAuth, postMessage abuse |
 | Inon Shkedy | https://inonst.medium.com/ + https://x.com/InonShkedy | API testing methodology, OWASP API Top 10 author |
-| gregxsunday (Bug Bounty Reports Explained) | https://bbre.dev/ + https://www.youtube.com/@gregxsunday | Video breakdowns of disclosed reports |
+| gregxsunday (Bug Bounty Reports Explained) | https://bbre.dev/ | Video breakdowns of disclosed reports |
 | NahamSec | https://nahamsec.com/ + https://x.com/NahamSec | Recon methodology, content with practical workflow |
 | jhaddix | https://x.com/Jhaddix + https://danielmiessler.com/ | Recon methodology, "The Bug Hunter's Methodology" decks |
 | Brett Buerhaus (bbuerhaus) | https://buer.haus/ + https://x.com/bbuerhaus | Logic bugs, mass-assignment, novel HTTP behavior |
