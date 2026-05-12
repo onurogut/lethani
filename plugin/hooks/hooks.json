@@ -3,10 +3,12 @@
   "hooks": {
     "SessionStart": [
       {
+        "matcher": "startup|clear|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/00_infra/scripts/check-update.sh --quiet"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/00_infra/scripts/check-update.sh\" --quiet",
+            "timeout": 10
           }
         ]
       }

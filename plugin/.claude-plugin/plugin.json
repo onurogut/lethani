@@ -1,6 +1,6 @@
 {
   "name": "lethani",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Agentic bug bounty and pentest orchestrator. Phase-aligned playbooks (recon → scan → manual → chain → report), parallel sub-agent dispatch, Kali via kali-ssh MCP, behavior-gated only for irreversible operator-side actions.",
   "homepage": "https://github.com/onurogut/lethani",
   "repository": "https://github.com/onurogut/lethani",
