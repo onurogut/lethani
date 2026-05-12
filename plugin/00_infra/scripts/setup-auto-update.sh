@@ -43,7 +43,7 @@ install_block() {
   {
     [[ -n "$current" ]] && printf '%s\n' "$current"
     printf '%s\n' "$MARK_START"
-    printf '%s cd %s && ./00_infra/scripts/update.sh --quiet >> %s 2>&1\n' \
+    printf '%s cd %s && ./00_infra/scripts/update.sh --quiet && ./00_infra/scripts/check-update.sh --quiet >> %s 2>&1\n' \
       "$schedule" "$ROOT" "$LOG"
     printf '%s\n' "$MARK_END"
   } | crontab -

@@ -199,6 +199,10 @@ unrelated playbooks.
 | Learn / update playbooks / what's new             | 00_infra/learning_mode.md                     |
 | New techniques / new CVE / latest research        | 00_infra/learning_mode.md                     |
 | Check sources / scan blogs / digest               | 00_infra/learning_mode.md                     |
+| Fetch only / stage patches / preview research     | commands/learn-fetch.md                       |
+| Pending patches / review staged / apply N         | commands/learn-pending.md                     |
+| **HEALTH / UPDATE**                               |                                               |
+| Version / check update / freshness / status       | commands/lethani-check.md                     |
 | **AGENTIC MODE**                                  |                                               |
 | Parallel / fan out / sub-agents / agentic         | 00_infra/agentic_mode.md                      |
 | Run phase 1 / run all recon / scan all subs       | 00_infra/agentic_mode.md (default)            |
@@ -211,4 +215,5 @@ unrelated playbooks.
 - Engagement scratch on Kali: `/tmp/lethani/<target-slug>/`
 - Local artifacts: `engagements/<target-slug>/` (scope.md, findings.md, recon/, scans/, poc/, notes.md)
 - Tester identity in reports: always `[redacted]`
-- New engagements: ask for scope confirmation before first kali-ssh call
+- New engagements: scaffold `engagements/<target>/scope.md` on first reference (authorization is implicit per `behavior_rules.md` §1)
+- First message of a fresh session: silently run `commands/lethani-check.md` only if the operator asks "is it up to date?" or similar; otherwise stay quiet

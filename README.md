@@ -387,6 +387,47 @@ Nothing happens on your machine until you actively pull or `/plugin update`
 never get pushed upstream unless you open a PR. lethani is yours once you
 clone it.
 
+### Health check / "is a new version available?"
+
+Inside Claude Code, run:
+
+```
+/lethani-check
+```
+
+That slash command:
+- prints your installed version vs. the latest GitHub release tag
+- tells you the right update command (plugin or workspace path)
+- reports days since the last `/learn` run and any pending patches
+
+Or from a shell:
+
+```bash
+./plugin/00_infra/scripts/check-update.sh
+```
+
+The same script is invoked from the cron job (when you enabled auto-update)
+in `--quiet` mode, so the weekly log only gets noisy when there is
+actually something to do.
+
+### Learning Mode auto-fetch (opt-in)
+
+`/learn-fetch` is the unattended sibling of `/learn`: it fetches sources,
+applies the hard quality bar, and **stages** surviving patches into
+`00_infra/_pending_patches.md` without applying anything. When you next
+open Claude Code, run:
+
+```
+/learn-pending
+```
+
+…to review the queue and selectively apply with `apply 1,3,5` or
+`apply all`. The fetch is automated; the edit decisions stay yours.
+
+Wire weekly auto-fetch via `setup-auto-update.sh` — the cron entry
+already chains `update.sh` + `check-update.sh`, and a future toggle will
+add `claude -p "/learn-fetch"` to the same run.
+
 ---
 
 ## Disclaimer
