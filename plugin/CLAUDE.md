@@ -204,6 +204,8 @@ unrelated playbooks.
 | **HEALTH / UPDATE**                               |                                               |
 | Version / check update / freshness / status       | commands/lethani-check.md                     |
 | Help / list commands / what can I do              | commands/lethani-help.md                      |
+| **ENGAGEMENT NOTES**                              |                                               |
+| Note / log / quick observation / jot down         | commands/note.md                              |
 | **AGENTIC MODE**                                  |                                               |
 | Parallel / fan out / sub-agents / agentic         | 00_infra/agentic_mode.md                      |
 | Run phase 1 / run all recon / scan all subs       | 00_infra/agentic_mode.md (default)            |
